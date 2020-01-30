@@ -52,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity{
             });
 
 
+            Log.i(ACTIVITY_NAME, "in onCreate()");
 
 
         }

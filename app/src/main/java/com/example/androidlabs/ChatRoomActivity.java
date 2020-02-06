@@ -2,12 +2,16 @@ package com.example.androidlabs;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import android.content.DialogInterface;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,21 @@ public class ChatRoomActivity extends AppCompatActivity {
             listView.setAdapter(adt);
         });
 
-
+        listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setTitle(getString(R.string.delete_confirm_msg))
+                    .setMessage(getString(R.string.the_selected_row_is) + " " + position + "\n" +
+                            getString(R.string.the_database_id_is) + " " + id)
+                    .setPositiveButton(R.string.yes, (DialogInterface dialog, int which) -> {
+                        listMessage.remove(position);
+                        ChatAdapter myAdapter = new ChatAdapter(listMessage, getApplicationContext());
+                        listView.setAdapter(myAdapter);
+                        //   ChatAdapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
+        });
 
         Log.d("ChatRoomActivity","onCreate");
 

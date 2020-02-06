@@ -1,79 +1,56 @@
 package com.example.androidlabs;
 
-
-import androidx.annotation.RequiresPermission;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.View;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
-
-import android.os.Bundle;
-import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    SharedPreferences prefs;
 
-    public static final String mypreference = "mypref";
-    public static final String Email = "emailKey";
-    protected Button button;
-
-
-    EditText email;
-
-
-
-
+    EditText emailField;
+    SharedPreferences sp;
+    Button loginBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main_relative);
-        //setContentView(R.layout.activity_main_grid);
-        //setContentView(R.layout.activity_main_linear);
         setContentView(R.layout.layout_lab3);
-        button = (Button) findViewById(R.id.button2);
-        email = (EditText) findViewById(R.id.edittext);
-        prefs = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        if (prefs.contains(Email)) {
-            email.setText(prefs.getString(Email, ""));
-        }
 
+        emailField = (EditText)findViewById(R.id.Lab3editText2);
+        sp = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+        String savedString = sp.getString("ReserveName", "Default value");
 
-        button.setOnClickListener(new View.OnClickListener() {
+        emailField.setHint(savedString);
 
-            @Override
-            public void onClick(View view) {
-                // Switch to ListItemsActivity
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                EditText edits= findViewById(R.id.edittext);
-                String novo = edits.getText().toString();
-                intent.putExtra("email", novo);
-                startActivity(intent);
-            }
+        loginBtn = (Button)findViewById(R.id.Lab3LoginBtn);
+        loginBtn.setOnClickListener( c -> {
 
+            Intent profilePage = new Intent(MainActivity.this, ProfileActivity.class);
+            //Give directions to go from this page, to SecondActivity
+            // EditText et = (EditText)findViewById(R.id.Lab3editText2);
+
+            profilePage.putExtra("emailTyped", emailField.getText().toString());
+
+            //Now make the transition:
+            startActivityForResult( profilePage, 345);
         });
-
-
     }
+
     @Override
     protected void onPause() {
-        String e = email.getText().toString();
-        SharedPreferences sharedPref = getSharedPreferences( mypreference, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(Email, e);
-        editor.commit();
-
-
-
-
-
         super.onPause();
 
-   }
+        //get an editor object
+        SharedPreferences.Editor editor = sp.edit();
 
+        //save what was typed under the name "ReserveName"
+        String whatWasTyped = emailField.getText().toString();
+        editor.putString("ReserveName", whatWasTyped);
+
+        //write it to disk:
+        editor.commit();
+    }
 }

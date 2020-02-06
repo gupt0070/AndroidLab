@@ -2,85 +2,89 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_alignParentTop="true"
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView0"
+        android:id="@+id/ProfileTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:text="@string/textView0"
-        android:textSize="12sp" />
+        android:text="@string/ProfileText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"/>
 
     <TextView
-        android:id="@+id/yourName"
+        android:id="@+id/NameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView0"
-
-        android:text="@string/yourName"
-        android:textSize="12sp" />
-
+        android:text="@string/NameText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ProfileTextView"/>
     <EditText
-        android:id="@+id/EnterYourName"
+        android:id="@+id/NameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="@string/EnterYourName"
-        android:inputType="textEmailAddress" />
+        android:ems="10"
+        android:hint="@string/NameHintText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/NameTextView"
+        />
 
     <TextView
-        android:id="@+id/YourEmail"
+        android:id="@+id/EmailTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/EnterYourName"
-        android:layout_marginTop="10dp"
-        android:text="@string/YourEmail"
-        android:textSize="12sp" />
-
+        android:text="@string/EmailTextViewText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/NameEditText"/>
     <EditText
-        android:id="@+id/EnterYourEmail"
+        android:id="@+id/EmailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/YourEmail"
-        android:layout_marginTop="10dp"
-        android:hint="@string/EnterYourEmail"
-
-        android:inputType="textEmailAddress" />
-
+        android:ems="10"
+        android:hint="@string/EmailHintText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/EmailTextView"
+        />
     <TextView
-        android:id="@+id/YourPic"
+        android:id="@+id/PictureTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/EnterYourEmail"
-        android:layout_marginTop="10dp"
-        android:text="@string/YourPic"
-        android:textSize="12sp" />
+        android:text="@string/PictureTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/EmailEditText"/>
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="match_parent"
-        android:layout_height="93dp"
-        android:layout_below="@+id/YourPic"
-        android:layout_marginTop="-1dp"
-        android:clickable="true"
-        android:contentDescription="@string/Image"
-        android:focusable="true"
-        android:onClick="sendMessage"
-        tools:src="@android:drawable/picture_frame"
-        tools:srcCompat="@android:drawable/picture_frame" />
-
+        android:id="@+id/ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:src="@android:drawable/picture_frame"
+        android:layout_below="@id/PictureTextView"/>
     <TextView
-        android:id="@+id/lastTex"
+        android:id="@+id/ImagePictureTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/imageButton"
-        android:text="@string/YourPic"
-        android:textSize="12sp" />
+        android:text="@string/ImagePictureTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ImageButton"/>
+
+    <Button
+        android:id="@+id/GoToChatBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/GoToChatText"
+        android:layout_below="@id/ImagePictureTextView"/>
+
 
 
 </RelativeLayout>

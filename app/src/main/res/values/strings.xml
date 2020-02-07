@@ -22,9 +22,8 @@
     <string name="SendText">Send</string>
     <string name="ReceiveText">Receive</string>
     <string name="ChatHint">Type here</string>
-    <string name="the_database_id_is">DB:</string>
-    <string name="the_selected_row_is">Row:</string>
     <string name="yes">Yes</string>
     <string name="delete_confirm_msg">Do you want to delete this?</string>
     <string name="no">No</string>
+
 </resources>

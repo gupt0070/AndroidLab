@@ -22,6 +22,8 @@
     <string name="SendText">Bhejo</string>
     <string name="ReceiveText">Milna</string>
     <string name="ChatHint">Likho</string>
+    <string name="the_database_id_is">Database Id:</string>
+    <string name="the_selected_row_is">Row No.:</string>
     <string name="yes">haan</string>
     <string name="delete_confirm_msg">delete krna chahte ho?</string>
     <string name="no">Nahi</string>

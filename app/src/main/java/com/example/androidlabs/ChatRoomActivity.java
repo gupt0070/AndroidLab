@@ -52,7 +52,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             listView.setAdapter(adt);
         });
 
-        
+
 
         Log.d("ChatRoomActivity","onCreate");
 

@@ -1,17 +1,14 @@
 package com.example.androidlabs;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import android.content.DialogInterface;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     List<MessageModel> listMessage = new ArrayList<>();
     Button sendBtn;
     Button receiveBtn;
+    DatabaseHelper db;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,48 +31,54 @@ public class ChatRoomActivity extends AppCompatActivity {
         editText = (EditText)findViewById(R.id.ChatEditText);
         sendBtn = (Button)findViewById(R.id.SendBtn);
         receiveBtn = (Button)findViewById(R.id.ReceiveBtn);
+        db = new DatabaseHelper(this);
 
 
-
-
+        viewData();
 
         sendBtn.setOnClickListener(c -> {
             String message = editText.getText().toString();
-            MessageModel model = new MessageModel(message, true);
-            listMessage.add(model);
-            editText.setText("");
-            ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
-            listView.setAdapter(adt);
+            if (!message.equals("")){
+//                MessageModel model = new MessageModel(message, true);
+//                listMessage.add(model);
+//
+//                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
+//                listView.setAdapter(adt);
+                db.insertData(message, true);
+                editText.setText("");
+                listMessage.clear();
+                viewData();
+            }
         });
 
         receiveBtn.setOnClickListener(c -> {
             String message = editText.getText().toString();
-            MessageModel model = new MessageModel(message, false);
-            listMessage.add(model);
-            editText.setText("");
-            ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
-            listView.setAdapter(adt);
+            if (!message.equals("")) {
+//                MessageModel model = new MessageModel(message, false);
+//                listMessage.add(model);
+//                editText.setText("");
+//                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
+//                listView.setAdapter(adt);
+                db.insertData(message, false);
+                editText.setText("");
+                listMessage.clear();
+                viewData();
+            }
         });
-
-        listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder
-                    .setTitle(getString(R.string.delete_confirm_msg))
-                    .setMessage(getString(R.string.the_selected_row_is) + " " + position + "\n" +
-                            getString(R.string.the_database_id_is) + " " + id)
-                    .setPositiveButton(R.string.yes, (DialogInterface dialog, int which) -> {
-                        listMessage.remove(position);
-                        ChatAdapter myAdapter = new ChatAdapter(listMessage, getApplicationContext());
-                        listView.setAdapter(myAdapter);
-                        //   ChatAdapter.notifyDataSetChanged();
-                    })
-                    .setNegativeButton(R.string.no, null)
-                    .show();
-        });
-
         Log.d("ChatRoomActivity","onCreate");
-
     }
 
+    private void viewData(){
+        Cursor cursor = db.viewData();
+           if (cursor.getCount() != 0){
+            while (cursor.moveToNext()){
+                MessageModel model = new MessageModel(cursor.getString(1), cursor.getInt(2)==0?true:false);
+                listMessage.add(model);
+                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
+                listView.setAdapter(adt);
+
+            }
+        }
+    }
 
 }

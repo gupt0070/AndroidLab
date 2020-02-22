@@ -67,6 +67,8 @@ public class ChatRoomActivity extends AppCompatActivity {
                     .setMessage(getString(R.string.the_selected_row_is) + " " + position + "\n" +
                             getString(R.string.the_database_id_is) + " " + id)
                     .setPositiveButton(R.string.yes, (DialogInterface dialog, int which) -> {
+                        MessageModel message = listMessage.get(position);
+                        db.drop(message);
                         listMessage.remove(position);
                         ChatAdapter myAdapter = new ChatAdapter(listMessage, getApplicationContext());
                         listView.setAdapter(myAdapter);

@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static com.example.androidlabs.R.id;
-import static com.example.androidlabs.R.layout;
-
 public class ChatAdapter extends BaseAdapter {
 
     private List<MessageModel> messageModels;
@@ -45,13 +42,13 @@ public class ChatAdapter extends BaseAdapter {
 
         if (view == null){
             if (messageModels.get(position).isSend()){
-                view = inflater.inflate(layout.activity_main_send, null);
+                view = inflater.inflate(R.layout.activity_main_send, null);
 
             }else {
-                view = inflater.inflate(layout.activity_main_receive, null);
+                view = inflater.inflate(R.layout.activity_main_receive, null);
             }
-            TextView  messageText = (TextView)view.findViewById(id.textViewMessage);
-            messageText.setText(messageModels.get(position).message);
+            TextView  messageText = (TextView)view.findViewById(R.id.textViewMessage);
+            messageText.setText(messageModels.get(position).getMessage());
         }
         return view;
     }

@@ -1,39 +1,41 @@
 package com.example.androidlabs;
 
+
 public class MessageModel {
-    public String message;
-    public boolean isSend;
-    public long messageID;
+    private String message;
+    private String type;
+    private   long id;
 
-    public MessageModel(String message, boolean isSend ) {
+    public MessageModel(Long id , String message, String type) {
+        this.id = id;
         this.message = message;
-        this.isSend = isSend;
+        this.type = type;
     }
 
-    public MessageModel() {
+    public MessageModel(String message, boolean isSend) {
+        this.message = message;
+        this.type = isSend ? "SEND" : "RECEIVE";
     }
+
 
     public String getMessage() {
         return message;
     }
+    public long getId(){ return id;}
+    public void setId(long id){this.id= id;}
+
 
     public void setMessage(String message) {
         this.message = message;
     }
 
     public boolean isSend() {
-        return isSend;
+        return type != null && type.equalsIgnoreCase("SEND") ;
     }
 
-    public void setSend(boolean send) {
-        isSend = send;
-    }
 
-    public long getMessageID() {
-        return messageID;
-    }
+    public String getType(){return type;}
+    public void setType(String type){this.type = type; }
 
-    public void setMessageID(long messageID) {
-        this.messageID = messageID;
-    }
+
 }

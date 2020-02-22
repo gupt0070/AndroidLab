@@ -1,6 +1,6 @@
 package com.example.androidlabs;
 
-import android.database.Cursor;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -32,53 +33,52 @@ public class ChatRoomActivity extends AppCompatActivity {
         sendBtn = (Button)findViewById(R.id.SendBtn);
         receiveBtn = (Button)findViewById(R.id.ReceiveBtn);
         db = new DatabaseHelper(this);
+        ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
 
-
-        viewData();
-
+        listMessage.addAll(db.read());
+        listView.setAdapter(adt);
         sendBtn.setOnClickListener(c -> {
             String message = editText.getText().toString();
-            if (!message.equals("")){
-//                MessageModel model = new MessageModel(message, true);
-//                listMessage.add(model);
-//
-//                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
-//                listView.setAdapter(adt);
-                db.insertData(message, true);
-                editText.setText("");
-                listMessage.clear();
-                viewData();
-            }
+
+            MessageModel model = new MessageModel(message, true);
+            listMessage.add(model);
+            editText.setText("");
+
+//          ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext())
+            db.create(model);
+
+            listView.setAdapter(adt);
         });
 
         receiveBtn.setOnClickListener(c -> {
             String message = editText.getText().toString();
-            if (!message.equals("")) {
-//                MessageModel model = new MessageModel(message, false);
-//                listMessage.add(model);
-//                editText.setText("");
-//                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
-//                listView.setAdapter(adt);
-                db.insertData(message, false);
-                editText.setText("");
-                listMessage.clear();
-                viewData();
-            }
-        });
-        Log.d("ChatRoomActivity","onCreate");
-    }
-
-    private void viewData(){
-        Cursor cursor = db.viewData();
-           if (cursor.getCount() != 0){
-            while (cursor.moveToNext()){
-                MessageModel model = new MessageModel(cursor.getString(1), cursor.getInt(2)==0?true:false);
+               MessageModel model = new MessageModel(message, false);
                 listMessage.add(model);
-                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
-                listView.setAdapter(adt);
+               editText.setText("");
+//                ChatAdapter adt = new ChatAdapter(listMessage, getApplicationContext());
+               db.create(model);
+               listView.setAdapter(adt);
 
-            }
-        }
+        });
+        listView.setOnItemLongClickListener((parent, view, position, id) -> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setTitle(getString(R.string.delete_confirm_msg))
+                    .setPositiveButton(R.string.yes, (DialogInterface dialog, int which) -> {
+                        listMessage.remove(position);
+                        ChatAdapter myAdapter = new ChatAdapter(listMessage, getApplicationContext());
+                        listView.setAdapter(myAdapter);
+                        //   ChatAdapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
+            return true;
+        });
+
+        Log.d("ChatRoomActivity","onCreate");
+
     }
+
 
 }
+

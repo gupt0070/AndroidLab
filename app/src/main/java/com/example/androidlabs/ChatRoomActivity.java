@@ -64,6 +64,8 @@ public class ChatRoomActivity extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder
                     .setTitle(getString(R.string.delete_confirm_msg))
+                    .setMessage(getString(R.string.the_selected_row_is) + " " + position + "\n" +
+                            getString(R.string.the_database_id_is) + " " + id)
                     .setPositiveButton(R.string.yes, (DialogInterface dialog, int which) -> {
                         listMessage.remove(position);
                         ChatAdapter myAdapter = new ChatAdapter(listMessage, getApplicationContext());
